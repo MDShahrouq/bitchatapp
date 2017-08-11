@@ -19,7 +19,9 @@
 
     <ul id="messages"></ul>
     <form action="">
-      <input id="entered_message" autocomplete="off" /><button>Send</button>
+    <input type="text" id="username" placeholder="Enter your name" />
+      <input id="entered_message" autocomplete="off" />
+      <button>Send</button>
     </form>
   
 
@@ -31,8 +33,14 @@
         $(function () {
           var socket = io('');
           $('form').submit(function(){
-            socket.emit('chat message', $('#entered_message').val());
-            $('#entered_message').val('');
+           
+           var usrname = $('#username').val();
+           var entmsg = $('#entered_message').val();
+           var compmsg = usrname + ':' + entmsg;
+           
+            socket.emit('chat message', compmsg);
+           $('#entered_message').val('');
+
             return false;
           });
           socket.on('chat message', function(msg){
